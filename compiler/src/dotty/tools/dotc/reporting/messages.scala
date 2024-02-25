@@ -3194,3 +3194,21 @@ class VolatileOnVal()(using Context)
 extends SyntaxMsg(VolatileOnValID):
   protected def msg(using Context): String = "values cannot be volatile"
   protected def explain(using Context): String = ""
+
+class UnusedSymbol(pos: SourcePosition, _msg: String, _actions: List[CodeAction])(using Context)
+extends Message(UnusedSymbolID) {
+  def kind = MessageKind.UnusedSymbol
+
+  override def actions(using Context) = _actions
+  override def msg(using Context) = _msg
+  override def explain(using Context) = ""
+}
+
+object UnusedSymbol {
+    def imports(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused import", Nil)
+    def localDefs(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused local definition", Nil)
+    def explicitParams(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused explicit parameter", Nil)
+    def implicitParams(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused implicit parameter", Nil)
+    def privateMembers(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused private member", Nil)
+    def patVars(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused pattern variable", Nil)
+}
