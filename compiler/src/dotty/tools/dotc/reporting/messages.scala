@@ -3205,7 +3205,7 @@ extends Message(UnusedSymbolID) {
 }
 
 object UnusedSymbol {
-    private def createRemoveLocalDefAction(treePos: SourcePosition)(using Context): List[CodeAction] = {
+    private def removeLocalDefAction(treePos: SourcePosition)(using Context): List[CodeAction] = {
       val source = treePos.source
       val sourcePos = treePos.sourcePos
       val endLine = source.offsetToLine(sourcePos.end - 1)
@@ -3226,7 +3226,7 @@ object UnusedSymbol {
       )
     }
     def imports(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused import", List.empty)
-    def localDefs(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused local definition", createRemoveLocalDefAction(treePos))
+    def localDefs(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused local definition", removeLocalDefAction(treePos))
     def explicitParams(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused explicit parameter", List.empty)
     def implicitParams(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused implicit parameter", List.empty)
     def privateMembers(treePos: SourcePosition)(using Context): UnusedSymbol = new UnusedSymbol(treePos, i"unused private member", List.empty)
