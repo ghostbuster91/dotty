@@ -3201,7 +3201,7 @@ extends Message(UnusedSymbolID) {
 
   override def actions(using Context) = _actions
   override def msg(using Context) = _msg
-  override def explain(using Context) = i""
+  override def explain(using Context) = ""
 }
 
 object UnusedSymbol {
