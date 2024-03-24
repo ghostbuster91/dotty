@@ -153,6 +153,49 @@ class CodeActionTest extends DottyTest:
          afterPhase = "checkUnusedPostInlining"
       )
 
+  @Test def removeUnusedLocalDefinitionBlock =
+    checkCodeAction(
+      code = """object Test:
+         |  def foo(): Int = {
+         |    val a = {
+         |      456
+         |    }
+         |    123
+         |  }
+         |""".stripMargin,
+      title = "Remove unused code",
+      expected = """object Test:
+         |  def foo(): Int = {
+         |    123
+         |  }
+         |""".stripMargin , 
+         afterPhase = "checkUnusedPostInlining"
+      )
+
+  @Test def removeUnusedPrivateMember =
+    checkCodeAction(
+      code = """object Test:
+         | private def foo: String = "123"
+         |""".stripMargin,
+      title = "Remove unused code",
+      expected = """object Test:
+         |""".stripMargin , 
+         afterPhase = "checkUnusedPostInlining"
+      )
+
+  @Test def removeUnusedPrivateMemberBlock =
+    checkCodeAction(
+      code = """object Test:
+         | private def foo: String = {
+         |   println("hello")
+         |   "456"
+         | }
+         |""".stripMargin,
+      title = "Remove unused code",
+      expected = """object Test:
+         |""".stripMargin , 
+         afterPhase = "checkUnusedPostInlining"
+      )
 
   // Make sure we're not using the default reporter, which is the ConsoleReporter,
   // meaning they will get reported in the test run and that's it.
