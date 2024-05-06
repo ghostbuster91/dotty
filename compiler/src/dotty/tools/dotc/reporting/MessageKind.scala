@@ -38,6 +38,6 @@ enum MessageKind:
       case PatternMatchExhaustivity => "Pattern Match Exhaustivity"
       case MatchCaseUnreachable => "Match case Unreachable"
       case PotentialIssue => "Potential Issue"
-      case UnusedSymbol => "Unused symbol"
+      case UnusedSymbol => "Unused Symbol"
       case kind => kind.toString
 end MessageKind
